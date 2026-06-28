@@ -1,8 +1,7 @@
 # Import python packages
 import streamlit as st
 #from snowflake.snowpark.context import get_active_session
-cnx=st.connection("snowflake")
-session=cnx.session()
+
 from snowflake.snowpark.functions import col , when_matched
 # Write directly to the app
 st.title(f"🥤 Pending Smoothie Orders ! :cup_with_straw:")
@@ -15,8 +14,9 @@ st.write('Orders That Needs To Be filled')
 ##)
 
 ##st.write("Your Favorite Fruit Is :", option)
-
-session = get_active_session()
+cnx=st.connection("snowflake")
+session=cnx.session()
+##session = get_active_session()
 ##order_filled = 1
 my_dataframe = session.table("SMOOTHIES.public.ORDERS") \
     .filter((col("ORDER_FILLED") ==0) & col("NAME_ON_ORDER").is_not_null()) \
